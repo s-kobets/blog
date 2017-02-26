@@ -8,9 +8,11 @@ import bluebird from 'bluebird';
 import config from './config';
 import authRoute from './routes/auth';
 import userRoute from './routes/user';
+import pageRoute from './routes/page';
 
 import errorHandler from './middlewares/errorHandler';
 import checkToken from './middlewares/checkToken';
+import getUser from './middlewares/getUser';
 
 const app = express();
 
@@ -38,12 +40,14 @@ app.use(session({
     secret: config.secret
 }));
 
-// app.get('*', async (req, res) => {
-//     res.end('Hello World');
-// });
+app.get('/admin', async (req, res) => {
+    res.render('index.html');
+});
 
 app.use('/api', authRoute);
 app.use('/api', checkToken, userRoute);
+app.use(getUser);
+app.use('/api', checkToken, pageRoute);
 
 // проверка работы токена
 // app.get('/token', checkToken, (req, res) => {
