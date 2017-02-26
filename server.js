@@ -4,6 +4,7 @@ import session from 'express-session';
 import bodyParser from 'body-parser';
 import morgan from 'morgan';
 import bluebird from 'bluebird';
+import Nuxt from 'nuxt';
 
 import config from './config';
 import authRoute from './routes/auth';
@@ -16,6 +17,8 @@ import getUser from './middlewares/getUser';
 
 const app = express();
 
+const host = process.env.HOST || '127.0.0.1';
+
 mongoose.Promise = bluebird;
 mongoose.connect(config.database, err => {
 	if (err) {
@@ -25,6 +28,24 @@ mongoose.connect(config.database, err => {
 	console.log('Mongoose connect');
 });
 
+// Import and Set Nuxt.js options
+let configNuxt = require('./nuxt.config.js')
+configNuxt.dev = !(process.env.NODE_ENV === 'production')
+
+// Init Nuxt.js
+const nuxt = new Nuxt(configNuxt)
+app.use(nuxt.render)
+
+// Build only in dev mode
+if (configNuxt.dev) {
+  nuxt.build()
+  .catch((error) => {
+    console.error(error) // eslint-disable-line no-console
+    process.exit(1)
+  })
+}
+
+// Listen the server
 app.listen(config.port, err => {
     if (err) throw err;
 
@@ -40,9 +61,9 @@ app.use(session({
     secret: config.secret
 }));
 
-app.get('/admin', async (req, res) => {
-    res.render('index.html');
-});
+// app.get('/admin', async (req, res) => {
+//     res.render('admin.vue');
+// });
 
 app.use('/api', authRoute);
 app.use('/api', checkToken, userRoute);

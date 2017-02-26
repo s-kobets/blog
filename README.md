@@ -1,3 +1,3 @@
 # Описание
 
-	Blog / NodeJS, Mongo, Vue
+	Blog / NodeJS, Mongo, Nuxt, Vue
