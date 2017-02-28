@@ -29,7 +29,7 @@ export async function getAll(req, res, next) {
     });
   }
 
-  res.json({ pages });
+  return res.json({ pages });
 }
 
 export async function getPagesByUserLogin(req, res, next) {

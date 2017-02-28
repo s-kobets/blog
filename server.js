@@ -14,6 +14,8 @@ import errorHandler from './middlewares/errorHandler';
 import checkToken from './middlewares/checkToken';
 import getUser from './middlewares/getUser';
 
+import * as PageController from './controllers/page';
+
 const app = express();
 const host = process.env.HOST || '127.0.0.1';
 
@@ -41,10 +43,15 @@ app.use(session({
     secret: config.secret
 }));
 
+app.get('/', (req, res) => {
+  PageController.getAll(req, res);
+});
+
 app.use('/api', authRoute);
 app.use('/api', checkToken, userRoute);
 app.use(getUser);
 app.use('/api', checkToken, pageRoute);
+
 
 // проверка работы токена
 // app.get('/token', checkToken, (req, res) => {
