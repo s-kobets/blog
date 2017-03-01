@@ -1,0 +1,13 @@
+{
+  "extends": [
+    "xo",
+    "plugin:xo/recommended"
+  ],
+  "parser": "babel-eslint",
+  "plugins": [
+    "xo"
+  ],
+  "rules": {
+  	"xo/no-abusive-eslint-disable": "off"
+  }
+}

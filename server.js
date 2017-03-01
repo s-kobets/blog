@@ -43,8 +43,11 @@ app.use(session({
     secret: config.secret
 }));
 
+app.use('/public', express.static('public'));
+
 app.get('/', (req, res) => {
-  PageController.getAll(req, res);
+  const posts = PageController.getAll(req, res);
+  res.sendFile(__dirname + '/views/index.html', {posts: posts});
 });
 
 app.use('/api', authRoute);

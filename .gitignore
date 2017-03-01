@@ -1,11 +1,4 @@
-# dependencies
-node_modules
-
-# logs
+node_modules/
 npm-debug.log
-
-# Nuxt build
-.nuxt
-
-# Nuxt generate
-dist
+public/
+/.gitignore~
