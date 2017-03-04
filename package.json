@@ -63,6 +63,7 @@
     "uglify-js": "git://github.com/mishoo/UglifyJS2#harmony",
     "uglifyjs-webpack-plugin": "0.2.1",
     "vue": "^2.2.1",
+    "vue-server-renderer": "^2.2.1",
     "webpack": "^2.2.1"
   }
 }

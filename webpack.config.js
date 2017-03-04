@@ -65,7 +65,8 @@ if (isDev) {
 
 module.exports = {
 	entry: {
-		main : './static_src/js/main.js'
+		main : './static_src/js/main.js',
+		app: './static_src/js/create-app.js'
 	},
 	output: {
 		path: path.join(__dirname, 'public'),
