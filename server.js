@@ -14,7 +14,7 @@ import errorHandler from './middlewares/errorHandler';
 import checkToken from './middlewares/checkToken';
 import getUser from './middlewares/getUser';
 
-import * as PageController from './controllers/page';
+import {getPageAll} from './services/PageService.js';
 
 const app = express();
 const host = process.env.HOST || '127.0.0.1';
@@ -48,15 +48,14 @@ app.use('/public', express.static('public'));
 app.set('view engine', 'pug');
 
 app.get('/', (req, res, next) => {
-  PageController.getAll(req, res, next)
+  getPageAll()
     .then(data => {
       res.render('index', {
         posts: data
       });
-      res.end();
     })
     .catch(function (err) {
-      console.log(11111111, err);
+      console.log(err);
     });
 
   // res.send(__dirname + '/views/index.pug', {posts: posts});
