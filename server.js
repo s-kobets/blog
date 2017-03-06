@@ -60,35 +60,37 @@ let renderer = require('vue-server-renderer').createRenderer();
 let layout = fs.readFileSync('./views/index.html', 'utf8');
 
 app.get('/', (req, res, next) => {
-  const posts = PageController.getAll(req, res);
+  PageController.getAll(req, res, next).then(data => {
+    console.log(111111111111111111, data);
+
+    renderer.renderToString(
+      // Создаём экземпляр приложения
+      new Vue({
+        template: '<div id="app">{{ data }}</div>',
+        data: {
+          data
+        }
+      }),
+      // Обрабатываем результат рендеринга
+      function (error, html) {
+        // Если при рендеринге произошла ошибка...
+        if (error) {
+          // Логируем её в консоль
+          console.error(error)
+          // И говорим клиенту, что что-то пошло не так
+          return next({
+            status: 500,
+            message
+          });
+        }
+        // Отсылаем HTML-шаблон, в который вставлен результат рендеринга приложения
+        res.send(layout.replace('<div id="app"></div>', html))
+      }
+    )
+  });
   // res.sendFile(__dirname + '/views/index.html', {posts: posts});
     // Рендерим наше приложение в строку
-  console.log(111111111111111111, posts);
-
-  renderer.renderToString(
-    // Создаём экземпляр приложения
-    new Vue({
-      template: '<div id="app">{{ posts }}</div>',
-      data: {
-        posts
-      }
-    }),
-    // Обрабатываем результат рендеринга
-    function (error, html) {
-      // Если при рендеринге произошла ошибка...
-      if (error) {
-        // Логируем её в консоль
-        console.error(error)
-        // И говорим клиенту, что что-то пошло не так
-        return next({
-          status: 500,
-          message
-        });
-      }
-      // Отсылаем HTML-шаблон, в который вставлен результат рендеринга приложения
-      res.send(layout.replace('<div id="app"></div>', html))
-    }
-  )
+  
 });
 // app.get('/', (req, res) => {
 //   const posts = PageController.getAll(req, res);
