@@ -1,5 +1,15 @@
 @import '../../node_modules/normalize.css/normalize.css';
+@import 'add.css';
 
 body {
   background: grey;
+}
+
+.wrap {
+  margin: 0 auto;
+  width: 1170px;
+
+  @media (width < 1170px) {
+    width: 100%;
+  }
 }

@@ -4,10 +4,6 @@ import session from 'express-session';
 import bodyParser from 'body-parser';
 import morgan from 'morgan';
 import bluebird from 'bluebird';
-import path from 'path';
-import vue from 'vue';
-import fs from 'fs';
-import createApp from './public/app';
 
 import config from './config';
 import authRoute from './routes/auth';
@@ -18,7 +14,7 @@ import errorHandler from './middlewares/errorHandler';
 import checkToken from './middlewares/checkToken';
 import getUser from './middlewares/getUser';
 
-import * as PageController from './controllers/page';
+import {getPageAll} from './services/PageService.js';
 
 const app = express();
 const host = process.env.HOST || '127.0.0.1';
@@ -47,55 +43,62 @@ app.use(session({
     secret: config.secret
 }));
 
-// app.use('/public', express.static('public'));
-app.use('/public', express.static(
-  path.resolve(__dirname, 'public')
-));
+app.use('/public', express.static('public'));
 
-// Получаем доступ к Vue глобально для серверной версии app.js
-global.Vue = vue;
-// Создаём рендерер
-let renderer = require('vue-server-renderer').createRenderer();
-// Получаем HTML-шаблон
-let layout = fs.readFileSync('./views/index.html', 'utf8');
+app.set('view engine', 'pug');
 
 app.get('/', (req, res, next) => {
-  PageController.getAll(req, res, next).then(data => {
-    console.log(111111111111111111, data);
+/* vue */
+//   PageController.getAll(req, res, next).then(data => {
+//     console.log(111111111111111111, data);
 
-    renderer.renderToString(
-      // Создаём экземпляр приложения
-      new Vue({
-        template: '<div id="app">{{ data }}</div>',
-        data: {
-          data
-        }
-      }),
-      // Обрабатываем результат рендеринга
-      function (error, html) {
-        // Если при рендеринге произошла ошибка...
-        if (error) {
-          // Логируем её в консоль
-          console.error(error)
-          // И говорим клиенту, что что-то пошло не так
-          return next({
-            status: 500,
-            message
-          });
-        }
-        // Отсылаем HTML-шаблон, в который вставлен результат рендеринга приложения
-        res.send(layout.replace('<div id="app"></div>', html))
-      }
-    )
-  });
+//     renderer.renderToString(
+//       // Создаём экземпляр приложения
+//       new Vue({
+//         template: '<div id="app">{{ data }}</div>',
+//         data: {
+//           data
+//         }
+//       }),
+//       // Обрабатываем результат рендеринга
+//       function (error, html) {
+//         // Если при рендеринге произошла ошибка...
+//         if (error) {
+//           // Логируем её в консоль
+//           console.error(error)
+//           // И говорим клиенту, что что-то пошло не так
+//           return next({
+//             status: 500,
+//             message
+//           });
+//         }
+//         // Отсылаем HTML-шаблон, в который вставлен результат рендеринга приложения
+//         res.send(layout.replace('<div id="app"></div>', html))
+//       }
+//     )
+//   });
   // res.sendFile(__dirname + '/views/index.html', {posts: posts});
     // Рендерим наше приложение в строку
-  
+    getPageAll()
+    .then(data => {
+      res.render('index', {
+        posts: data
+      });
+    })
+    .catch(function (err) {
+      console.log(err);
+    });
+
+  // res.send(__dirname + '/views/index.pug', {posts: posts});
 });
-// app.get('/', (req, res) => {
-//   const posts = PageController.getAll(req, res);
-//   res.sendFile(__dirname + '/views/index.html', {posts: posts});
-// });
+
+app.get('/add', (req, res, next) => {
+  res.render('add');
+});
+
+app.get('/auth', (req, res, next) => {
+  res.render('auth');
+});
 
 app.use('/api', authRoute);
 app.use('/api', checkToken, userRoute);
