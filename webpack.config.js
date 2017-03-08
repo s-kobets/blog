@@ -38,14 +38,14 @@ let plugins = [
 	new ExtractTextPlugin({
 		filename: 'main.css',
 		allChunks: true 
-	}),
+	})
 	//one HTML file
-    new HtmlWebpackPlugin({
-        filename: 'index.html',
-        inject : true,
-        template: './views/index.html',
-        chunks: 'filename'
-    })
+    // new HtmlWebpackPlugin({
+    //     filename: 'index.html',
+    //     inject : true,
+    //     template: './views/index.html',
+    //     chunks: 'filename'
+    // })
 ];
 
 if (isDev) {

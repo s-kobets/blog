@@ -1,21 +1,5 @@
+extends ./default
 include ./mixin.pug
 
-html
-	head
-		link(rel="stylesheet", href="/public/main.css")
-	body
-		h1 Hello World, this is!
-		// - var posts = json
-		//- +list('my-list', [{"id":"on"},{"id":"two"}])
-		//- posts-all
-		//- 	= posts
-		+list('my-list', posts)
-
-		//- +list('my-posts', posts)
-
-		//- posts= posts
-		
-		block content
-			p This page doesn't have any content yet.
-
-	script(src="/public/main.js")
+block content
+	+list('my-list', posts)

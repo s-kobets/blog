@@ -1,0 +1,22 @@
+extends ./default
+
+block content
+	form(id="js-signin-user" class="auth-user" method="POST" action="/api/signin")
+		label(name="name")
+			| Имя
+			input(id="name" name="login" type="text")
+		label(name="pass")
+			| Пароль
+			input(id="pass" name="password" type="password")
+		button(type="submit" class="js-signin-user")
+			| Войти
+
+	form(class="auth-user" method="POST" action="/api/signup")
+		label(name="name")
+			| Имя
+			input(id="name" name="login" type="text")
+		label(name="pass")
+			| Пароль
+			input(id="pass" name="password" type="password")
+		button(type="submit" class="js-signup-user")
+			| Зарегистрироваться

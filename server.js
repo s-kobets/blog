@@ -61,6 +61,14 @@ app.get('/', (req, res, next) => {
   // res.send(__dirname + '/views/index.pug', {posts: posts});
 });
 
+app.get('/add', (req, res, next) => {
+  res.render('add');
+});
+
+app.get('/auth', (req, res, next) => {
+  res.render('auth');
+});
+
 app.use('/api', authRoute);
 app.use('/api', checkToken, userRoute);
 app.use(getUser);
