@@ -4,9 +4,9 @@ block content
 	form(id="js-add-post" class="add-post" method="POST" action="/api/pages")
 		label(name="title")
 			| Заглавие
-			input(id="title" type="text")
+			input(id="title" name="title" type="text")
 		label(name="body")
 			| Описание
-			textarea(id="body")
+			textarea(id="body" name="body")
 		button(type="submit" class="js-submit-addpost")
 			| Опубликовать

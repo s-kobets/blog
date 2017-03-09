@@ -15,10 +15,6 @@ function auth() {
 		})
 		.done(data => {
 			console.log(data);
-			Cookies.set('user_id', data._id, {
-				expires: 30,
-				path: '/'
-			});
 		});
 	});
 	const $signin = $('.js-signin-user');
@@ -26,11 +22,8 @@ function auth() {
 		e.preventDefault();
 		const form = $(this).closest('form');
 		$.ajax({
-			headers: {
-				'Authorization': Cookies.get('user_id')
-			},
 			url: '/api/signin',
-			method: 'GET',
+			method: 'POST',
 			contentType: 'application/json',
 			data: JSON.stringify(getUrlVars(`&${form.serialize()}`))
 		})
