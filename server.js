@@ -9,6 +9,7 @@ import config from './config';
 import authRoute from './routes/auth';
 import userRoute from './routes/user';
 import pageRoute from './routes/page';
+import uploadRoute from './routes/upload';
 
 import errorHandler from './middlewares/errorHandler';
 import checkToken from './middlewares/checkToken';
@@ -104,7 +105,7 @@ app.use('/api', authRoute);
 app.use('/api', checkToken, userRoute);
 app.use(getUser);
 app.use('/api', checkToken, pageRoute);
-
+app.use('/api', checkToken, uploadRoute);
 
 // проверка работы токена
 // app.get('/token', checkToken, (req, res) => {
