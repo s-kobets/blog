@@ -11,7 +11,7 @@ block content
 		button(type="submit" class="js-submit-addpost")
 			| Опубликовать
 
-	form
+	form(enctype='multipart/form-data')
 		input(type="file" name="image") 
 		button(type="submit" class="js-submit-addFile")
 			| Upload Image
