@@ -16,6 +16,7 @@ import checkToken from './middlewares/checkToken';
 import getUser from './middlewares/getUser';
 
 import {getPageAll} from './services/PageService.js';
+import {markdown} from 'markdown';
 
 const app = express();
 const host = process.env.HOST || '127.0.0.1';
@@ -83,7 +84,9 @@ app.get('/', (req, res, next) => {
     getPageAll()
     .then(data => {
       res.render('index', {
-        posts: data
+        posts: data,
+        html: data,
+        markdown: markdown.toHTML('"Hello *World*!"') 
       });
     })
     .catch(function (err) {
