@@ -32,27 +32,6 @@ function addPost() {
 			}
 		]
 	});
-
-	console.log(simplemde);
-
-	simplemde.toolbar.push({
-		name: 'file',
-		action: function customFunction(editor) {
-			console.log(editor);
-			const buttonFile = $('.js-input-file');
-			buttonFile.trigger('click');
-			buttonFile.on('change', function () {
-				upload($(this))
-					.done(data => {
-						const cm = editor.codemirror;
-						const output = `![](${data.path})`;
-						cm.replaceSelection(output);
-					});
-			});
-		},
-		className: 'fa fa-star',
-		title: 'Add File'
-	});
 	/* eslint-enable */
 
 	const $addpost = $('.js-submit-addpost');

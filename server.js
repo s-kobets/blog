@@ -46,6 +46,7 @@ app.use(session({
 }));
 
 app.use('/public', express.static('public'));
+app.use('/uploads', express.static('uploads'));
 
 app.set('view engine', 'pug');
 
@@ -114,8 +115,6 @@ app.use('/api', checkToken, uploadRoute);
 // app.get('/token', checkToken, (req, res) => {
 // 	res.json('token');
 // });
-
-
 
 // обработчик ошибок все последний
 app.use(errorHandler);

@@ -3,10 +3,7 @@ mixin list(id, items)
 		ul(id=index)
 			li(class='id')= val.id
 			li(class='title')= val.title
-			if val.body
-				li(class='body')= val.body
-			else
-				li(class='hide')
+			li !{val.body}
 			if val.url
 				li(class='url')= val.url
 			else
