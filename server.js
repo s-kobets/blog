@@ -85,9 +85,7 @@ app.get('/', (req, res, next) => {
     getPageAll()
     .then(data => {
       res.render('index', {
-        posts: data,
-        html: data,
-        markdown: markdown.toHTML('"Hello *World*!"') 
+        posts: data
       });
     })
     .catch(function (err) {

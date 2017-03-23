@@ -1,12 +1,12 @@
 mixin list(id, items)
 	each val, index in items
-		ul(id=index)
-			li(class='id')= val.id
-			li(class='title')= val.title
-			li !{val.body}
+		div(id=index)
+			div(class='id')= val.id
+			div(class='title')= val.title
+			div !{val.body}
 			if val.url
-				li(class='url')= val.url
+				div(class='url')= val.url
 			else
-				li(class='hide')
-			li(class='userId')= val.userId
-			li(class='createdAt')= val.createdAt
+				div(class='hide')
+			div(class='userId')= val.userId
+			div(class='createdAt')= val.createdAt

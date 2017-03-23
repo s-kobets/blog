@@ -1,5 +1,5 @@
-
 import mongoose, { Schema } from 'mongoose';
+import mongoosePaginate from 'mongoose-paginate';
 
 const PageSchema = new Schema({
   title: { type: String, require: true },
@@ -8,5 +8,7 @@ const PageSchema = new Schema({
   createdAt: { type: Date, require: true, default: Date.now },
   userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }
 });
+
+PageSchema.plugin(mongoosePaginate);
 
 export default mongoose.model('Page', PageSchema);

@@ -25,9 +25,10 @@ export async function getPageAll() {
 	 //  return pages; 
   // });
 
-
   pages.forEach(function(element, index) {
-  	element.body = markdown.toHTML(element.body);
+    if (element.body) {
+      element.body = markdown.toHTML(element.body);
+    }
   });
 
   return pages;
