@@ -5,15 +5,20 @@ import paginat from '../static_src/js/pagination'
 
 export async function getPageAll(req) {
   let pages;
-
+  const page = req.query.page ? req.query.page : 1;
   try {
     await Page.paginate({}, { page: req.query.page, limit: config.limit })
       .then(result => {
         pages = result.docs;
-        pages.paginat = paginat(result.pages, Number(result.page));
-
+        // pages.paginat = paginat(result.pages, Number(result.page));
+        pages.paginat = {
+          total: Math.ceil(result.total/config.limit),
+          current: page
+        }
         // console.log(result);
     });
+
+
     // var pages = await Page.find({});
   } catch (e) {
     throw e;

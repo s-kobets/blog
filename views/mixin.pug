@@ -12,5 +12,11 @@ mixin list(id, items)
 			div(class='createdAt')= val.createdAt
 
 mixin pagination(items)
-	each val, index in items
-		= val.item
+	= items.total
+	= items.current
+	.pagination
+		- for(var i = 1; i <= items.total; i += 1)
+			- if (i == items.current)
+				span.page.current=i
+			- else
+				a.page(href='?page='+i)=i 		

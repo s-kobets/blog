@@ -84,9 +84,10 @@ app.get('/', (req, res, next) => {
     // Рендерим наше приложение в строку
     getPageAll(req)
     .then(data => {
+      console.log(data);
       res.render('index', {
         posts: data,
-        paginat: JSON.stringify(data.paginat)
+        paginat: data.paginat
       });
     })
     .catch(function (err) {
