@@ -9,6 +9,11 @@ const PageSchema = new Schema({
   userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }
 });
 
+// mongoosePaginate.paginate.options = { 
+//   lean:  true,
+//   limit: 3
+// };
+
 PageSchema.plugin(mongoosePaginate);
 
 export default mongoose.model('Page', PageSchema);

@@ -1,15 +1,24 @@
 import Page from '../models/page';
 import config from '../config';
 import {markdown} from 'markdown';
+import paginat from '../static_src/js/pagination'
 
-export async function getPageAll() {
- 
+export async function getPageAll(req) {
+  let pages;
+
   try {
-    var pages = await Page.find({});
+    await Page.paginate({}, { page: req.query.page, limit: config.limit })
+      .then(result => {
+        pages = result.docs;
+        pages.paginat = paginat(result.pages, Number(result.page));
+
+        // console.log(result);
+    });
+    // var pages = await Page.find({});
   } catch (e) {
     throw e;
   }
-
+// 
   // function fn(element) { // sample async action
   //   return new Promise(resolve => {
   //   	resolve(markdown.toHTML(element.body)); 

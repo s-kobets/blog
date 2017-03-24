@@ -1,5 +1,6 @@
 import Page from '../models/page';
 import User from '../models/user';
+import config from '../config';
 
 export async function create(req, res, next) {
   const pageData = req.body;
@@ -20,8 +21,13 @@ export async function create(req, res, next) {
 }
 
 export async function getAll(req, res, next) {
+  let pages;
   try {
-    var pages = await Page.find({});
+    await Page.paginate({}, { page: req.query.page, limit: config.limit })
+      .then(result => {
+        pages = result.docs;
+    });
+
   } catch ({ message }) {
     return next({
       status: 500,

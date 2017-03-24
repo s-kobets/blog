@@ -10,3 +10,7 @@ mixin list(id, items)
 				div(class='hide')
 			div(class='userId')= val.userId
 			div(class='createdAt')= val.createdAt
+
+mixin pagination(items)
+	each val, index in items
+		= val.item

@@ -82,10 +82,11 @@ app.get('/', (req, res, next) => {
 //   });
   // res.sendFile(__dirname + '/views/index.html', {posts: posts});
     // Рендерим наше приложение в строку
-    getPageAll()
+    getPageAll(req)
     .then(data => {
       res.render('index', {
-        posts: data
+        posts: data,
+        paginat: JSON.stringify(data.paginat)
       });
     })
     .catch(function (err) {
