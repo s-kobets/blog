@@ -51,40 +51,9 @@ app.use('/uploads', express.static('uploads'));
 app.set('view engine', 'pug');
 
 app.get('/', (req, res, next) => {
-/* vue */
-//   PageController.getAll(req, res, next).then(data => {
-//     console.log(111111111111111111, data);
-
-//     renderer.renderToString(
-//       // Создаём экземпляр приложения
-//       new Vue({
-//         template: '<div id="app">{{ data }}</div>',
-//         data: {
-//           data
-//         }
-//       }),
-//       // Обрабатываем результат рендеринга
-//       function (error, html) {
-//         // Если при рендеринге произошла ошибка...
-//         if (error) {
-//           // Логируем её в консоль
-//           console.error(error)
-//           // И говорим клиенту, что что-то пошло не так
-//           return next({
-//             status: 500,
-//             message
-//           });
-//         }
-//         // Отсылаем HTML-шаблон, в который вставлен результат рендеринга приложения
-//         res.send(layout.replace('<div id="app"></div>', html))
-//       }
-//     )
-//   });
-  // res.sendFile(__dirname + '/views/index.html', {posts: posts});
     // Рендерим наше приложение в строку
     getPageAll(req)
     .then(data => {
-      console.log(data);
       res.render('index', {
         posts: data,
         paginat: data.paginat
@@ -93,8 +62,6 @@ app.get('/', (req, res, next) => {
     .catch(function (err) {
       console.log(err);
     });
-
-  // res.send(__dirname + '/views/index.pug', {posts: posts});
 });
 
 app.get('/add', (req, res, next) => {

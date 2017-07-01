@@ -3,7 +3,7 @@ mixin list(id, items)
 		div(id=index)
 			div(class='id')= val.id
 			div(class='title')= val.title
-			div !{val.body}
+			div(class='body') !{val.body}
 			if val.url
 				div(class='url')= val.url
 			else
@@ -19,4 +19,4 @@ mixin pagination(items)
 			- if (i == items.current)
 				span.page.current=i
 			- else
-				a.page(href='?page='+i)=i 		
+				a.page(href='?page='+i)=i
